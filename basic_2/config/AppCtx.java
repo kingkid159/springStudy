@@ -9,6 +9,7 @@ import basic_2.MemberInfoPrinter;
 import basic_2.MemberListPrinter;
 import basic_2.MemberPrinter;
 import basic_2.MemberRegisterService;
+import basic_2.VersionPrinter;
 
 @Configuration	//스프링 설정클래스를 의미, 이 애노테이션을 붙여야 스프링 설정 클래스로 사용할 수 있다.
 public class AppCtx {
@@ -46,5 +47,13 @@ public class AppCtx {
 		infoPrinter.setMemberDao(memberDao());
 		infoPrinter.setPrinter(memberPrinter());
 		return infoPrinter;
+	}
+	
+	@Bean
+	public VersionPrinter versionPrinter() {
+		VersionPrinter versionPrinter = new VersionPrinter();
+		versionPrinter.setMajorVersion(5);
+		versionPrinter.setMinorVersion(0);
+		return versionPrinter;
 	}
 }

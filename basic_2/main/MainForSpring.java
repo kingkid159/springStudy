@@ -14,6 +14,7 @@ import basic_2.MemberListPrinter;
 import basic_2.MemberNotFoundException;
 import basic_2.MemberRegisterService;
 import basic_2.RegisterRequest;
+import basic_2.VersionPrinter;
 import basic_2.WrongIdPasswordException;
 import basic_2.assembler.Assembler;
 import basic_2.config.AppCtx;
@@ -57,6 +58,9 @@ public class MainForSpring {
 				continue;
 			} else if (command.startsWith("info ")) {
 				processInfoCommand(command.split(" "));
+				continue;
+			} else if (command.equals("version")) {
+				processVersionCommand();
 				continue;
 			}
 			//명령어를 잘못 입력한 경우 도움말을 출력해주는 printHelp()메서드를 실행한다
@@ -140,5 +144,11 @@ public class MainForSpring {
 		System.out.println("new 이메일 이름 암호 암호확인.");
 		System.out.println("change 이메일 현재비번 변경비번.");
 		System.out.println();
+	}
+	
+	private static void processVersionCommand() {
+		VersionPrinter versionPrinter =
+				ctx.getBean("versionPrinter", VersionPrinter.class);
+		versionPrinter.print();
 	}
 }
