@@ -9,6 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import basic_2.ChangePasswordService;
 import basic_2.DuplicateMemberException;
+import basic_2.MemberListPrinter;
 import basic_2.MemberNotFoundException;
 import basic_2.MemberRegisterService;
 import basic_2.RegisterRequest;
@@ -48,6 +49,10 @@ public class MainForSpring {
 			//입력한 문자열이 change로 시작하면 processChangeCommand()메서드를 실행한다
 			} else if (command.startsWith("change ")) {
 				processChangeCommand(command.split(" ")); //공백을 구분자로 문자열을 배열로 만든다
+				continue;
+			//입력한 문자열이 list로 시작하면 processListCommand()메서드를 실행한다	
+			} else if (command.contentEquals("list")) {
+				processListCommand();
 				continue;
 			}
 			//명령어를 잘못 입력한 경우 도움말을 출력해주는 printHelp()메서드를 실행한다
@@ -106,6 +111,12 @@ public class MainForSpring {
 		} catch (WrongIdPasswordException e) {
 			System.out.println("이메일과 암호가 일치하지 않습니다.");
 		}
+	}
+	
+	private static void processListCommand() {
+		MemberListPrinter listPrinter =
+				ctx.getBean("listPrinter", MemberListPrinter.class);
+		listPrinter.printAll();
 	}
 	//나머지코드
 	private static void printHelp() {

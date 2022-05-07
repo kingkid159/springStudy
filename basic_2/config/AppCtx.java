@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import basic_2.ChangePasswordService;
 import basic_2.MemberDao;
+import basic_2.MemberListPrinter;
+import basic_2.MemberPrinter;
 import basic_2.MemberRegisterService;
 
 @Configuration	//스프링 설정클래스를 의미, 이 애노테이션을 붙여야 스프링 설정 클래스로 사용할 수 있다.
@@ -25,5 +27,15 @@ public class AppCtx {
 		ChangePasswordService pwdSvc = new ChangePasswordService();
 		pwdSvc.setMemberDao(memberDao());
 		return pwdSvc;
+	}
+	
+	@Bean
+	public MemberPrinter memberPrinter() {
+		return new MemberPrinter();
+	}
+	
+	@Bean
+	public MemberListPrinter listPrinter() {
+		return new MemberListPrinter(memberDao(), memberPrinter());
 	}
 }
