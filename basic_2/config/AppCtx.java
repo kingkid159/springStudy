@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import basic_2.ChangePasswordService;
 import basic_2.MemberDao;
+import basic_2.MemberInfoPrinter;
 import basic_2.MemberListPrinter;
 import basic_2.MemberPrinter;
 import basic_2.MemberRegisterService;
@@ -37,5 +38,13 @@ public class AppCtx {
 	@Bean
 	public MemberListPrinter listPrinter() {
 		return new MemberListPrinter(memberDao(), memberPrinter());
+	}
+	//세터 매서드를 사용한 의존 주입
+	@Bean
+	public MemberInfoPrinter infoPrinter() {
+		MemberInfoPrinter infoPrinter = new MemberInfoPrinter();
+		infoPrinter.setMemberDao(memberDao());
+		infoPrinter.setPrinter(memberPrinter());
+		return infoPrinter;
 	}
 }

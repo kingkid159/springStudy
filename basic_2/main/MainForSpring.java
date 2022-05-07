@@ -9,6 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import basic_2.ChangePasswordService;
 import basic_2.DuplicateMemberException;
+import basic_2.MemberInfoPrinter;
 import basic_2.MemberListPrinter;
 import basic_2.MemberNotFoundException;
 import basic_2.MemberRegisterService;
@@ -53,6 +54,9 @@ public class MainForSpring {
 			//입력한 문자열이 list로 시작하면 processListCommand()메서드를 실행한다	
 			} else if (command.contentEquals("list")) {
 				processListCommand();
+				continue;
+			} else if (command.startsWith("info ")) {
+				processInfoCommand(command.split(" "));
 				continue;
 			}
 			//명령어를 잘못 입력한 경우 도움말을 출력해주는 printHelp()메서드를 실행한다
@@ -117,6 +121,16 @@ public class MainForSpring {
 		MemberListPrinter listPrinter =
 				ctx.getBean("listPrinter", MemberListPrinter.class);
 		listPrinter.printAll();
+	}
+	
+	private static void processInfoCommand(String[] arg) {
+		if(arg.length != 2) {
+			printHelp();
+			return;
+		}
+		MemberInfoPrinter infoPrinter =
+				ctx.getBean("infoPrinter", MemberInfoPrinter.class);
+				infoPrinter.printMemberInfo(arg[1]);
 	}
 	//나머지코드
 	private static void printHelp() {
