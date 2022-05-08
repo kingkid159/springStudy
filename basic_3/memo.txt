@@ -1,0 +1,28 @@
+빈 객체의 메서드에 @Autowired 애노테이션을 붙이면 스프링은 해당 메서드를
+호출한다. 이 때 메서드 파라미터 타입에 해당하는 빈 객체를 찾아 인자로 주입한다.
+
+@Qualifier
+- 자동 주입 가능한 빈이 두 개 이상이면 자동 주입할 빈을 지정해야한다
+그때 Qualifier 어노테이션을 사용한다
+- 사용 예시 : @Qualifier("한정값")
+- @Qualifier 어노테이션을 @Bean 어노테이션을 붙인 빈 설정 메서드에 하나
+@Autowired 어노테이션을 사용한 자동 주입할 빈을 한정할 때 하나 사용한다.
+- @Qualifier 어노테이션이 없으면 빈의 이름을 한정자로 지정한다.
+@Autowired도 @Qualifier 어노테이션이 없으면 필드나 파라미터 이름을 한정자로 지정한다.
+ex) 	
+	빈 이름 printer  @Qualifier 지정 x  한정자 = printer
+	빈 이름 printer2 @Qualifier 지정 mprinter 한정자 = mprinter
+	빈 이름 printer3 @Qualifier 지정 x 한정자 = printer3
+
+자동 주입할 대상이 필수가 아닌 경우에는
+- @Autowired의 속성을 required = false 로 지정하면 된다
+ex) @Autowired(required = false)
+- Optional을 사용할 수도 있다.
+ex) Optional<클래스>
+- @Nullable 을 사용한다.
+ex) @Nullable 클래스
+- Optional의 경우 일치하는 빈이 존재하지 않으면 값이 없는 Optional을 인자로 전달한다.
+- @Autowired는 빈이 존재 하지 않으면 메서드를 호출하지 않는다
+- @Nullable은 빈이 존제하지 않아도 메서드가 호출된다
+- @Autowired 애노테이션이 붙어있으면 세터를 통해 의존을 주입해도 자동 주입을 통해 일치하는 빈을 주입한다.
+@Autowired 애노테이션을 사용했다면 자동 주입 기능을 사용하는 편이 낫다.
